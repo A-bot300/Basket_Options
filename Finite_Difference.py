@@ -3,28 +3,28 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 
-S1=20 
-w1=0.5
-S2=20
-w2=0.5
-K=100
-p1=7
+#initializing
+w1=0.5        
+w2=0.5       
+K=100         
+S1=40         
 sigma1=0.3 
 sigma2=0.3 
 r=0.05
 corr=0.5
 T=3
-q1=33 
+S2=40
+k_=120 
 M=40
 L=40
 N=10
-r1=3
 ds1=5
 ds2=5
 dt=T/N
 
 grid=np.empty([N+1,M+1,L+1])
 
+#boundary conditions
 for i in range(0,M+1):
   for j in range(0,L+1):
     grid[N][i][j]=max(w1*ds1*i + w2*ds2*j - K , 0)
@@ -47,7 +47,7 @@ for i in range(0,N+1):
     
     
 #print(grid)  
-  
+ #backtracking to calculate stock price 
 for i in range(0,N):
   for j in range(1,M):
     for k in range(1,L):
@@ -67,6 +67,6 @@ for i in range(0,N):
       
       grid[N-i-1][j][k]=dt*(A*grid[N-i][j][k] + B*grid[N-i][j+1][k] + C*grid[N-i][j-1][k] + D*grid[N-i][j][k+1] + E*grid[N-i][j][k-1] + F*(grid[N-i][j+1][k+1] + grid[N-i][j-1][k-1] - grid[N-i][j+1][k-1] - grid[N-i][j-1][k+1]))
 
-print(grid[p1][q1][r1])       
+print(grid[0][S1][S2]-k_)       
 #print(grid) 
 #print(A,B,C,D,E,F)
